@@ -12,7 +12,16 @@ function App() {
           <Redirect to="/home" />
         </Route>
         <Route path={"/home"}>
-          <Home />
+          <Home></Home>
+        </Route>
+        <Route path={"/pending"}>
+          <Home></Home>
+        </Route>
+        <Route path={"/today"}>
+          <Home></Home>
+        </Route>
+        <Route path={"/archives"}>
+          <Home></Home>
         </Route>
         <Route path={"/auth/login"}>
           <AuthPage />

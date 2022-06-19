@@ -110,7 +110,7 @@ function Login() {
   const onLogin = (data) => {
     login(data).then((res) => {
       localStorage.setItem("token", res.data.token);
-      history.replace("/analytics");
+      history.replace("/home");
     });
   };
 
@@ -187,13 +187,12 @@ function SignUp() {
     signup(data).then((res) => {
       if (res.data) {
         localStorage.setItem("token", res.data.token);
-        history.replace("/analytics");
+        history.replace("/home");
       }
       toast.handleOpen();
     });
   };
 
-  console.log({ toast });
   const status = isSuccess ? "success" : isError ? "error" : "info";
 
   const statusMessage =
@@ -270,7 +269,7 @@ export default AuthPage;
 
 function AuthNavbar() {
   return (
-    <nav className="h-16 sm:h-20 w-full flex items-center justify-left text-tertiary bg-primary px-3 md:px-32">
+    <nav className="h-16 sm:h-20 w-full flex items-center justify-left text-tertiary bg-secondary px-3 md:px-32">
       <div className="w-12 h-12 rounded-full flex items-center justify-center bg-[#ffffff20]">
         <MdAdminPanelSettings size={30} />
       </div>

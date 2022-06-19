@@ -1,71 +1,11 @@
 import { useState } from "react";
 import { useRouteMatch } from "react-router-dom";
-import { useGetEmployeesQuery } from "../api/api";
-
-export function useDefaultFilters() {
-  return {
-    sortBy: { value: "sales_low_to_high", label: "Sales low to high" },
-    searchQuery: "",
-    salesRange: {},
-  };
-}
-
-export function useEmployees(filters = {}) {
-  const { sortBy, searchQuery, salesRange } = filters;
-
-  const { isFetching, data, refetch } = useGetEmployeesQuery();
-
-  let filteredEmployees = [];
-
-  if (data) {
-    const { data: employees = [] } = data;
-    console.log({ data, employees });
-
-    filteredEmployees = [...employees];
-
-    if (sortBy === "sales_high_to_low") {
-      filteredEmployees = filteredEmployees.sort(
-        (a, b) => b.totalSales - a.totalSales
-      );
-    } else {
-      filteredEmployees = filteredEmployees.sort(
-        (a, b) => a.totalSales - b.totalSales
-      );
-    }
-
-    if (searchQuery) {
-      filteredEmployees = filteredEmployees.filter((el) =>
-        el.name.toUpperCase().includes(searchQuery.toUpperCase())
-      );
-    }
-
-    if (salesRange) {
-      filteredEmployees = filteredEmployees.filter((el) => {
-        const { totalSales } = el;
-
-        console.log({ salesRange });
-
-        if (salesRange.includes("<"))
-          return totalSales < +salesRange.split("<")[1];
-
-        if (salesRange.includes(">")) {
-          console.log(salesRange.split(">")[0]);
-          return totalSales > +salesRange.split(">")[1];
-        }
-
-        const [start, end] = salesRange.split("-");
-        return totalSales >= start && totalSales <= end;
-      });
-    }
-  }
-
-  return {
-    isFetching,
-    employees: filteredEmployees,
-    topEmployees: filteredEmployees.slice(0, 4),
-    refetch,
-  };
-}
+import {
+  useGetMyTodosQuery,
+  useGetPendingTodosQuery,
+  useGetTodaysTodosQuery,
+  useGetTodoQuery,
+} from "../api/api";
 
 export function useToggle(initialValue = false) {
   const [show, setShow] = useState(initialValue);
@@ -99,5 +39,33 @@ export function useHeaderTitle() {
 
   return {
     title,
+  };
+}
+
+export function useMyTodos() {
+  const { data, isFetching } = useGetMyTodosQuery();
+
+  const pendingTodos =
+    data?.todos?.filter((todo) => !todo.isCompleted)?.length || 0;
+
+  return {
+    isFetching,
+    todos: data?.todos,
+    pendingTodos,
+    totalTodos: data?.todos?.length,
+  };
+}
+
+export function useTodaysTodo() {
+  const { data, isFetching } = useGetTodaysTodosQuery();
+
+  const pendingTodos =
+    data?.todos?.filter((todo) => !todo.isCompleted)?.length || 0;
+
+  return {
+    isFetching,
+    todos: data?.todos,
+    pendingTodos,
+    totalTodos: data?.todos?.length,
   };
 }

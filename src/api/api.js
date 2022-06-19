@@ -18,27 +18,47 @@ const baseQuery = fetchBaseQuery({
 const api = createApi({
   reducerPath: "api",
   baseQuery,
-  tagTypes: ["Employees"],
+  tagTypes: ["Todos"],
   endpoints: (builder) => ({
-    getEmployees: builder.query({
-      query: () => "/employees",
-      providesTags: ["Employees"],
+    getAllTodos: builder.query({
+      query: () => "/todos",
+      providesTags: ["Todos"],
     }),
-    getEmployee: builder.query({
-      query: (id) => `/employees/${id}`,
-      providesTags: ["Employees"],
+    getTodo: builder.query({
+      query: (id) => `/todos/${id}`,
+      providesTags: ["Todos"],
     }),
-    getTotalSales: builder.query({
-      query: () => "/analytics/total-sales",
-      providesTags: ["Employees"],
+    getMyTodos: builder.query({
+      query: () => `/todos/my-todos`,
+      providesTags: ["Todos"],
     }),
-    deleteEmployee: builder.mutation({
-      query: (id) => ({ url: `/employees/${id}`, method: "DELETE" }),
-      invalidatesTags: ["Employees"],
+    getTodaysTodos: builder.query({
+      query: () => `/todos/today`,
+      providesTags: ["Todos"],
     }),
-    createEmployee: builder.mutation({
-      query: (creds) => ({ url: "/employees", method: "POST", body: creds }),
-      invalidatesTags: ["Employees"],
+    getArchivesTodos: builder.query({
+      query: () => `/todos/today`,
+      providesTags: ["Todos"],
+    }),
+    getPendingTodos: builder.query({
+      query: () => `/todos/pending`,
+      providesTags: ["Todos"],
+    }),
+    updateTodo: builder.query({
+      query: (id, creds) => ({
+        url: `/todos/${id}`,
+        method: "PATCH",
+        body: creds,
+      }),
+      providesTags: ["Todos"],
+    }),
+    deleteTodo: builder.mutation({
+      query: (id) => ({ url: `/todos/${id}`, method: "DELETE" }),
+      invalidatesTags: ["Todos"],
+    }),
+    createTodo: builder.mutation({
+      query: (creds) => ({ url: "/todos", method: "POST", body: creds }),
+      invalidatesTags: ["Todos"],
     }),
     login: builder.mutation({
       query: (creds) => ({ url: `/users/login`, method: "POST", body: creds }),
@@ -55,12 +75,16 @@ const api = createApi({
 export default api;
 
 export const {
-  useDeleteEmployeeMutation,
-  useGetEmployeeQuery,
-  useGetEmployeesQuery,
+  useGetAllTodosQuery,
+  useGetTodoQuery,
+  useUpdateTodoMutation,
+  useCreateTodoMutation,
+  useDeleteTodoMutation,
+  useGetMyTodosQuery,
+  useGetPendingTodosQuery,
+  useGetArchivesTodosQuery,
+  useGetTodaysTodosQuery,
   useLoginMutation,
-  useGetTotalSalesQuery,
-  useCreateEmployeeMutation,
   useSignupMutation,
   useGetMeQuery,
 } = api;
