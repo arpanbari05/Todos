@@ -1,15 +1,19 @@
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Switch } from "react-router-dom";
 import "styled-components/macro";
 import { Route } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
-import { useToggle } from "./customHooks";
+import Home from "./pages/Home";
 
 function App() {
-  const navbar = useToggle(false);
-
   return (
     <BrowserRouter>
       <Switch>
+        <Route path={"/"} exact>
+          <Redirect to="/home" />
+        </Route>
+        <Route path={"/home"}>
+          <Home />
+        </Route>
         <Route path={"/auth/login"}>
           <AuthPage />
         </Route>

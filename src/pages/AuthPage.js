@@ -1,17 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { useLoginMutation, useSignupMutation } from "../api/api";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { IoMdLock } from "react-icons/io";
 import Avatar from "@mui/material/Avatar";
-import {
-  Link,
-  Route,
-  Switch,
-  useHistory,
-  useRouteMatch,
-} from "react-router-dom";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { MatButton, Toast } from "../components";
 import { useToggle } from "../customHooks";
 
@@ -281,7 +275,7 @@ function AuthNavbar() {
         <MdAdminPanelSettings size={30} />
       </div>
       <p className="text-white text-base md:text-xl ml-2 sm:ml-3">
-        Get Access to Admin Panel
+        You can get Access to Admin Panel by signing in with Admin Credentials
       </p>
     </nav>
   );
