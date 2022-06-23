@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useRouteMatch } from "react-router-dom";
 import {
+  useGetMeQuery,
   useGetMyTodosQuery,
-  useGetPendingTodosQuery,
   useGetTodaysTodosQuery,
-  useGetTodoQuery,
 } from "../api/api";
 
 export function useToggle(initialValue = false) {
@@ -45,13 +44,13 @@ export function useHeaderTitle() {
 export function useMyTodos() {
   const { data, isFetching } = useGetMyTodosQuery();
 
-  const pendingTodos =
-    data?.todos?.filter((todo) => !todo.isCompleted)?.length || 0;
+  const completedTodos =
+    data?.todos?.filter((todo) => todo.isCompleted)?.length || 0;
 
   return {
     isFetching,
     todos: data?.todos,
-    pendingTodos,
+    completedTodos,
     totalTodos: data?.todos?.length,
   };
 }
@@ -59,13 +58,54 @@ export function useMyTodos() {
 export function useTodaysTodo() {
   const { data, isFetching } = useGetTodaysTodosQuery();
 
-  const pendingTodos =
-    data?.todos?.filter((todo) => !todo.isCompleted)?.length || 0;
+  const completedTodos =
+    data?.todos?.filter((todo) => todo.isCompleted)?.length || 0;
 
   return {
     isFetching,
     todos: data?.todos,
-    pendingTodos,
+    completedTodos,
     totalTodos: data?.todos?.length,
+  };
+}
+
+export function useGetNavLinks() {
+  const { data, isFetching } = useGetMeQuery();
+
+  let navLinks = [
+    {
+      label: "All todos",
+      to: "/home",
+    },
+    {
+      label: "Today",
+      to: "today",
+    },
+    {
+      label: "Archives",
+      to: "archives",
+    },
+  ];
+
+  if (data?.user?.type === "admin") {
+    navLinks = [
+      {
+        label: "All todos",
+        to: "todos",
+      },
+      {
+        label: "Reports",
+        to: "reports",
+      },
+      {
+        label: "User",
+        to: "users",
+      },
+    ];
+  }
+
+  return {
+    isFetching,
+    navLinks,
   };
 }

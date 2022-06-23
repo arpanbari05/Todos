@@ -13,7 +13,7 @@ function Home({ children }) {
     <div>
       <TopHeader />
       <div
-        className="grid"
+        className="grid items-start"
         css={`
           grid-template-columns: 300px 1fr;
         `}

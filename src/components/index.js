@@ -1,7 +1,7 @@
 import { Alert, Button, Snackbar } from "@mui/material";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-export function Loader({ size = 17 }) {
+export function Loader({ size = 14 }) {
   return <AiOutlineLoading3Quarters size={size} className="animate-spin" />;
 }
 
@@ -11,15 +11,18 @@ export function MatButton({
   className,
   type = "button",
   size = "large",
+  variant = "contained",
   isLoading,
+  color = "primary",
 }) {
   return (
     <Button
       className={`flex justify-center items-center gap-3 rounded-lg h-[44px] ${className}`}
       type={type}
       fullWidth
-      variant="contained"
+      variant={variant}
       size={size}
+      color={color}
       onClick={onClick}
     >
       <span className="flex justify-center items-center gap-2">{children}</span>

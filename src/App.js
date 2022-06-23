@@ -3,6 +3,10 @@ import "styled-components/macro";
 import { Route } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
 import Home from "./pages/Home";
+import { AllTodos, Today, Archives } from "./components/Sections";
+import Users from "./components/Users";
+import Reports from "./components/Reports";
+import AdminTodos from "./components/AdminTodos";
 
 function App() {
   return (
@@ -12,16 +16,34 @@ function App() {
           <Redirect to="/home" />
         </Route>
         <Route path={"/home"}>
-          <Home></Home>
-        </Route>
-        <Route path={"/pending"}>
-          <Home></Home>
+          <Home>
+            <AllTodos />
+          </Home>
         </Route>
         <Route path={"/today"}>
-          <Home></Home>
+          <Home>
+            <Today />
+          </Home>
         </Route>
         <Route path={"/archives"}>
-          <Home></Home>
+          <Home>
+            <Archives />
+          </Home>
+        </Route>
+        <Route path={"/users"}>
+          <Home>
+            <Users />
+          </Home>
+        </Route>
+        <Route path={"/todos"}>
+          <Home>
+            <AdminTodos />
+          </Home>
+        </Route>
+        <Route path={"/reports"}>
+          <Home>
+            <Reports />
+          </Home>
         </Route>
         <Route path={"/auth/login"}>
           <AuthPage />

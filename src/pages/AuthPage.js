@@ -110,7 +110,8 @@ function Login() {
   const onLogin = (data) => {
     login(data).then((res) => {
       localStorage.setItem("token", res.data.token);
-      history.replace("/home");
+      if (res.data.user.type === "admin") history.replace("/todos");
+      else history.replace("/home");
     });
   };
 
@@ -155,7 +156,7 @@ function Login() {
             })}
           />
         ))}
-        <MatButton type="submit" isLoading={isLoading}>
+        <MatButton className="w-full" type="submit" isLoading={isLoading}>
           Login
         </MatButton>
         <p className="text-center">
